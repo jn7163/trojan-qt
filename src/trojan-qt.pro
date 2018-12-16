@@ -50,12 +50,14 @@ SOURCES += \
     trojan/src/authenticator.cpp \
     trojan/src/clientsession.cpp \
     trojan/src/config.cpp \
+    trojan/src/forwardsession.cpp \
     trojan/src/log.cpp \
     trojan/src/serversession.cpp \
     trojan/src/service.cpp \
     trojan/src/session.cpp \
     trojan/src/socks5address.cpp \
     trojan/src/ssldefaults.cpp \
+    trojan/src/sslsession.cpp \
     trojan/src/trojanrequest.cpp \
     trojan/src/udppacket.cpp \
     trojan/src/version.cpp \
@@ -74,11 +76,13 @@ HEADERS += \
     trojan/src/authenticator.h \
     trojan/src/clientsession.h \
     trojan/src/config.h \
+    trojan/src/forwardsession.h \
     trojan/src/log.h \
     trojan/src/serversession.h \
     trojan/src/service.h \
     trojan/src/session.h \
     trojan/src/ssldefaults.h \
+    trojan/src/sslsession.h \
     trojan/src/trojanrequest.h \
     trojan/src/version.h \
     App.h \
