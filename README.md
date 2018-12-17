@@ -8,11 +8,9 @@
 
 Todo | Comment
 ------- | -------
-Main Interface | Done 
-Configuration Editor | Done 
-Settings Interface | Haven't Started
-App Data Files Management | Done 
-Connection to Trojan | Done
+Linux | Done
+Mac | Automatic system proxy setting not supported
+Windows | Automatic system proxy setting not supported
 
 ## Documentation
 An online documentation can be found [here](https://trojan-gfw.github.io/trojan/).
