@@ -46,6 +46,14 @@ unix{
 #    PKGCONFIG += openssl
 }
 
+win32{#win64 also included
+    INCLUDEPATH += $$(BOOST_PATH)/include/boost-1_69/
+    INCLUDEPATH += $$(OPENSSL64_PATH)/include
+    LIBS += -L$$(BOOST_PATH)/lib -lboost_system
+    LIBS += -LC:/Program Files/OpenSSL-Win64/lib -lssl -lcrypto
+#DEFINES +=BOOST_USE_LIB# dont know if it is necessery
+}
+
 SOURCES += \
     trojan/src/authenticator.cpp \
     trojan/src/clientsession.cpp \
