@@ -49,9 +49,14 @@ unix{
 win32{#win64 also included
     INCLUDEPATH += $$(BOOST_PATH)/include/boost-1_69/
     INCLUDEPATH += $$(OPENSSL64_PATH)/include
-    LIBS += -L$$(BOOST_PATH)/lib -lboost_system
-    LIBS += -LC:/Program Files/OpenSSL-Win64/lib -lssl -lcrypto
-#DEFINES +=BOOST_USE_LIB# dont know if it is necessery
+    #LIBS += -L$$(BOOST_PATH)/lib -llibboost_system-mgw73-mt-x64-1_69
+    LIBS += -L$$(OPENSSL64_PATH)/lib
+    LIBS += -lwsock32
+    LIBS += -lws2_32
+    LIBS += -llibcrypto -llibssl
+    LIBS += -lCrypt32
+    DEFINES +=WIN32_LEAN_AND_MEAN
+    #DEFINES +=BOOST_USE_LIB# dont know if it is necessery
 }
 
 SOURCES += \
