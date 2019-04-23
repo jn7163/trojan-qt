@@ -45,6 +45,7 @@ bool relaunch_as_root()
 #endif
 
 int main(int argc, char *argv[]) {
+  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QCoreApplication::setSetuidAllowed(true);
   App app(argc, argv);
 
