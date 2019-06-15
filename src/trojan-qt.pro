@@ -21,7 +21,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 TEMPLATE = app
 TARGET = Trojan
-ICON = trojan-qt.icns
 
 CONFIG += c++11
 
@@ -31,6 +30,7 @@ mac{
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
     LIBS += -framework Security
     INCLUDEPATH += /usr/local/include/
+    ICON = trojan-qt.icns
 }
 
 unix{
@@ -52,6 +52,7 @@ win32{#win64 also included
     LIBS += -lwsock32 -lws2_32
     LIBS += -lCrypt32
     DEFINES +=WIN32_LEAN_AND_MEAN
+    RC_ICONS = trojan-qt.ico
     BOOST_DIR_FOLDERS=$$system(dir $$(BOOST_PATH)\include /b /ad-s-h /on)
     for(folder,BOOST_DIR_FOLDERS):contains(folder,boost-[1-9]_[6-9][0-9]){
         folder_folder=$$system(dir $$(BOOST_PATH)\include\\$$folder /b /ad-s-h,boost)
