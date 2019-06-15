@@ -3,7 +3,7 @@
 
 #ifdef Q_OS_MAC
 #include <QMessageBox>
-#include <Authorization.h>
+#include <Security/Authorization.h>
 #include <mach-o/dyld.h>
 #endif
 
