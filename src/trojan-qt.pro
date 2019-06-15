@@ -47,12 +47,16 @@ unix{
 }
 
 win32{#win64 also included
-    INCLUDEPATH += $$(BOOST_PATH)/include/boost-1_69/
     INCLUDEPATH += $$(OPENSSL64_PATH)/include
     LIBS += -L$$(OPENSSL64_PATH)/lib -llibcrypto -llibssl
     LIBS += -lwsock32 -lws2_32
     LIBS += -lCrypt32
-    DEFINES +=WIN32_LEAN_AND_MEAN    
+    DEFINES +=WIN32_LEAN_AND_MEAN
+    BOOST_DIR_FOLDERS=$$system(dir $$(BOOST_PATH)\include /b /ad-s-h /on)
+    for(folder,BOOST_DIR_FOLDERS):contains(folder,boost-[1-9]_[6-9][0-9]){
+        folder_folder=$$system(dir $$(BOOST_PATH)\include\\$$folder /b /ad-s-h,boost)
+        contains(folder_folder,boost):INCLUDEPATH +=$$(BOOST_PATH)/include/$$folder
+    }
 }
 
 SOURCES += \
