@@ -61,6 +61,7 @@ win32{#win64 also included
 }
 
 SOURCES += \
+    Privoxy.cpp \
     trojan/src/authenticator.cpp \
     trojan/src/clientsession.cpp \
     trojan/src/config.cpp \
@@ -87,6 +88,7 @@ SOURCES += \
     AppManager.cpp
 
 HEADERS += \
+    Privoxy.h \
     trojan/src/authenticator.h \
     trojan/src/clientsession.h \
     trojan/src/config.h \
