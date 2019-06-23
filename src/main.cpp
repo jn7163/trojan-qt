@@ -1,5 +1,6 @@
 #include "App.h"
 #include <QApplication>
+#include <QtGlobal>
 
 #ifdef Q_OS_MAC
 #include <QMessageBox>
