@@ -3,13 +3,14 @@
 
 Privoxy::Privoxy(QObject *parent) : QProcess(parent)
 {
-    _config="listen-address __PRIVOXY_BIND_IP__:__PRIVOXY_BIND_PORT__ \n "
-            "toggle 0 \n "
-            "logfile privoxy.log \n "
+    _config="listen-address __PRIVOXY_BIND_IP__:__PRIVOXY_BIND_PORT__ \n"
+            "toggle 0 \n"
+            "logfile privoxy.log \n"
             "forward-socks5 / 127.0.0.1:__SOCKS_PORT__ .";
-    AppManager::checkFile(APP_DATA_DIR+"privoxy.exe",":/privoxy/privoxy.exe");
-    setProgram(APP_DATA_DIR+"privoxy.exe");
-    setNativeArguments(APP_DATA_DIR+"privoxy.conf");
+    AppManager::checkFile(APP_DATA_DIR+"/privoxy.exe",":/privoxy/privoxy.exe");
+    //setNativeArguments(APP_DATA_DIR+"/privoxy.conf");
+    setArguments(QStringList(APP_DATA_DIR+"/privoxy.conf"));
+    setProgram(APP_DATA_DIR+"/privoxy.exe");
 }
 
 unsigned short Privoxy::getAvailablePort()
@@ -39,11 +40,11 @@ void Privoxy::configure(bool localOnly,unsigned short &trojanPort)
 {
     unsigned short port =getAvailablePort();
     _config.replace("__PRIVOXY_BIND_IP__",localOnly?"127.0.0.1":"0.0.0.0");
-    _config.replace("__PRIVOXY_BIND_PORT__",QString(port));
-    _config.replace("__SOCKS_PORT__",QString(trojanPort));
+    _config.replace("__PRIVOXY_BIND_PORT__",QString::number(trojanPort));
+    _config.replace("__SOCKS_PORT__",QString::number(port));
     trojanPort =port;
     try{
-        QFile qfile(APP_DATA_DIR+"/privioxy.conf");
+        QFile qfile(APP_DATA_DIR+"/privoxy.conf");
         qfile.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text);
         QTextStream ts(&qfile);
         ts<<_config<<endl;
