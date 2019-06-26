@@ -6,18 +6,25 @@
 #ifdef Q_OS_WIN
 
 #include <QObject>
+#include <QString>
 #include <QProcess>
+#include <QFile>
+#include <QStandardPaths>
+#include <QTextStream>
+#include <AppManager.h>
+
 #include <boost/asio.hpp>
 
-class Privoxy : public QObject
+class Privoxy : public QProcess
 {
     Q_OBJECT
 public:
     explicit Privoxy(QObject *parent = nullptr);
-protected:
-    void run();
+    void configure(bool localOnly,unsigned short &trojanPort);
 private:
     unsigned short getAvailablePort();
+    QString _config;
+
 signals:
     void started(const bool &success);
     void exception(const QString &wtf);
