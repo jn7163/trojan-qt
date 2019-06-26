@@ -3,6 +3,7 @@
 
 #include "trojan/src/config.h"
 
+#include <QtGlobal>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
@@ -13,6 +14,9 @@
 #include <QDir>
 #include <QTextStream>
 #include <QDebug>
+#ifdef Q_OS_WIN
+#include <QSettings>
+#endif // Q_OS_WIN
 
 #define APP_DATA_DIR QStandardPaths::writableLocation(QStandardPaths::DataLocation)
 #define SERVER_CONFIG_PATH APP_DATA_DIR + "/client.json"
