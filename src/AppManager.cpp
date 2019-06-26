@@ -1,5 +1,9 @@
 #include "AppManager.h"
 
+#ifdef Q_OS_WIN
+  QString AppManager::clint_real_config_path;
+  QJsonObject AppManager::clint_real_config_obj;
+#endif // Q_OS_WIN
 QJsonObject AppManager::client_config_obj;
 QJsonObject AppManager::server_config_obj;
 QString AppManager::client_config_path;
@@ -221,7 +225,14 @@ void AppManager::setSystemProxy(const bool &enabled)
           system("gsettings set org.gnome.system.proxy ignore-hosts \"[]\"");
           system("gsettings set org.gnome.system.proxy mode \"manual\"");
         }
+#elif defined(Q_OS_WIN)
+      QSettings qsettings("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings",QSettings::NativeFormat);
+      system("reg add ""HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings"" /v ProxyEnable /t REG_DWORD /d 1 /f"); //暂时没找到怎么让qsettings写dword值
+      qsettings.setValue("ProxyServer","127.0.0.1:"+AppManager::client_config_obj.take("local_port").toString());
+      qsettings.setValue("ProxyOverride","127.0.0.1");
+
 #endif
+
     }
   else
     {
@@ -232,6 +243,12 @@ void AppManager::setSystemProxy(const bool &enabled)
           system(QString("gsettings set org.gnome.system.proxy.socks host 0").toStdString().c_str());
           system("gsettings set org.gnome.system.proxy mode \"none\"");
         }
+#elif defined(Q_OS_WIN)
+      QSettings qsettings("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings",QSettings::NativeFormat);
+      system("reg add ""HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings"" /v ProxyEnable /t REG_DWORD /d 0 /f"); //暂时没找到怎么让qsettings写dword值
+      qsettings.remove("ProxyServer");
+      qsettings.remove("ProxyOverride");
+
 #endif
     }
 }
