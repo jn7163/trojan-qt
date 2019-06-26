@@ -28,8 +28,6 @@ private:
 signals:
     void started(const bool &success);
     void exception(const QString &wtf);
-public slots:
-    void stop();
 };
 
 #endif // Q_OS_WIN
