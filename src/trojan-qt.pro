@@ -114,4 +114,5 @@ HEADERS += \
 
 RESOURCES += \
     img.qrc \
-    file.qrc
+    file.qrc \
+    privoxy.qrc

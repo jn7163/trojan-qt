@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/privoxy">
+        <file>privoxy.exe</file>
+    </qresource>
+</RCC>
