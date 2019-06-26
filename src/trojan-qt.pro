@@ -75,6 +75,7 @@ SOURCES += \
     trojan/src/sslsession.cpp \
     trojan/src/trojanrequest.cpp \
     trojan/src/udppacket.cpp \
+    trojan/src/udpforwardsession.cpp \
     trojan/src/version.cpp \
     App.cpp \
     main.cpp \
@@ -100,6 +101,7 @@ HEADERS += \
     trojan/src/ssldefaults.h \
     trojan/src/sslsession.h \
     trojan/src/trojanrequest.h \
+    trojan/src/udpforwardsession.h \
     trojan/src/version.h \
     App.h \
     Window.h \
