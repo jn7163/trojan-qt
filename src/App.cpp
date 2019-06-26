@@ -23,6 +23,7 @@ App::App(int &argc, char **argv)
   : QApplication(argc, argv)
   , window(new Window())
   , service(new ServiceThread(this))
+  SLASH_ON_NOT_WIN ,privoxy(new Privoxy(this))
 {
   QApplication::setQuitOnLastWindowClosed(false);
 
@@ -48,8 +49,21 @@ App::~App()
 
 void App::startTrojan()
 {
+#ifdef Q_OS_WIN
+  AppManager::clint_real_config_path=APP_DATA_DIR+"client.real.json"; //先写在这里
+
+  AppManager::loadJson(AppManager::client_config_path,AppManager::clint_real_config_obj);
+  unsigned short local_port=AppManager::clint_real_config_obj.take("local_port").toString().toUShort() ;
+  privoxy->configure(true,local_port);
+  AppManager::clint_real_config_obj.insert("local_port",local_port);
+  AppManager::writeJson(AppManager::clint_real_config_path,AppManager::clint_real_config_obj);
+
+  service->config().load(AppManager::clint_real_config_path.toStdString());
+  privoxy->start();
+#else
   service->config().load(AppManager::current_run_type == Config::CLIENT ?
                              AppManager::client_config_path.toStdString() : AppManager::server_config_path.toStdString());
+#endif // Q_OS_WIN
   service->start();
 }
 

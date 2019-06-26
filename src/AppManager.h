@@ -34,6 +34,10 @@ public:
   static QJsonObject client_config_obj;
   static QJsonObject server_config_obj;
   static QString client_config_path;
+#ifdef Q_OS_WIN
+  static QString clint_real_config_path;
+  static QJsonObject clint_real_config_obj;
+#endif // Q_OS_WIN
   static QString server_config_path;
   static Config::RunType current_run_type;
 
