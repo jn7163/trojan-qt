@@ -50,7 +50,7 @@ App::~App()
 void App::startTrojan()
 {
 #ifdef Q_OS_WIN
-  AppManager::clint_real_config_path=APP_DATA_DIR+"client.real.json"; //先写在这里
+  AppManager::clint_real_config_path=APP_DATA_DIR+"/client.real.json"; //先写在这里
 
   AppManager::loadJson(AppManager::client_config_path,AppManager::clint_real_config_obj);
   unsigned short local_port=AppManager::clint_real_config_obj.take("local_port").toString().toUShort() ;
@@ -70,6 +70,7 @@ void App::startTrojan()
 void App::stopTrojan()
 {
   service->stop();
+  privoxy->kill();
 }
 
 void App::popErrorBox(const QString &what)
