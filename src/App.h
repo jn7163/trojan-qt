@@ -21,13 +21,6 @@
 #define APP_H
 #include <QtGlobal>
 
-
-#ifdef Q_OS_WIN
-#define SLASH_ON_NOT_WIN
-#else
-#define SLASH_ON_NOT_WIN //
-#endif // Q_OS_WIN
-
 #include <QApplication>
 #include <QMessageBox>
 #include <cstdlib>
@@ -39,7 +32,7 @@
 
 #include "Window.h"
 #include "ServiceThread.h"
-#include <Privoxy.h>
+#include "Privoxy.h"
 
 
 class App : public QApplication

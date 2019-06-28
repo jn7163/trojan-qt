@@ -23,7 +23,9 @@ App::App(int &argc, char **argv)
   : QApplication(argc, argv)
   , window(new Window())
   , service(new ServiceThread(this))
-  SLASH_ON_NOT_WIN ,privoxy(new Privoxy(this))
+#ifdef Q_OS_WIN
+  , privoxy(new Privoxy(this))
+#endif // Q_OS_WIN
 {
   QApplication::setQuitOnLastWindowClosed(false);
 
