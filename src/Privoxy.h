@@ -20,7 +20,7 @@ class Privoxy : public QProcess
     Q_OBJECT
 public:
     explicit Privoxy(QObject *parent = nullptr);
-    void configure(bool localOnly,unsigned short &trojanPort);
+    void configure(const bool localOnly,unsigned short &trojanPort);
 private:
     unsigned short getAvailablePort();
     QString _config;
