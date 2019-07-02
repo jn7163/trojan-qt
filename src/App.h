@@ -49,7 +49,9 @@ public:
 
 private:
   ServiceThread *service;
-  SLASH_ON_NOT_WIN Privoxy *privoxy;
+#ifdef Q_OS_WIN
+  Privoxy *privoxy;
+#endif // Q_OS_WIN
 private slots:
   void startTrojan();
   void stopTrojan();
