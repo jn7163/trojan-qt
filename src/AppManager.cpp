@@ -226,11 +226,7 @@ void AppManager::setSystemProxy(const bool &enabled)
           system("gsettings set org.gnome.system.proxy mode \"manual\"");
         }
 #elif defined(Q_OS_WIN)
-      QSettings qsettings("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings",QSettings::NativeFormat);
-      system("reg add ""HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings"" /v ProxyEnable /t REG_DWORD /d 1 /f"); //暂时没找到怎么让qsettings写dword值
-      qsettings.setValue("ProxyServer","127.0.0.1:"+AppManager::client_config_obj.take("local_port").toString());
-      qsettings.setValue("ProxyOverride","127.0.0.1");
-
+      SysProxy::setSystemProxyWin(AppManager::client_config_obj.take("local_port").toInt(),"<local>");
 #endif
 
     }
@@ -244,11 +240,7 @@ void AppManager::setSystemProxy(const bool &enabled)
           system("gsettings set org.gnome.system.proxy mode \"none\"");
         }
 #elif defined(Q_OS_WIN)
-      QSettings qsettings("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings",QSettings::NativeFormat);
-      system("reg add ""HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings"" /v ProxyEnable /t REG_DWORD /d 0 /f"); //暂时没找到怎么让qsettings写dword值
-      qsettings.remove("ProxyServer");
-      qsettings.remove("ProxyOverride");
-
+      SysProxy::offSystemProxyWin();
 #endif
     }
 }

@@ -16,6 +16,7 @@
 #include <QDebug>
 #ifdef Q_OS_WIN
 #include <QSettings>
+#include "Sysproxy.h"
 #endif // Q_OS_WIN
 
 #define APP_DATA_DIR QStandardPaths::writableLocation(QStandardPaths::DataLocation)
