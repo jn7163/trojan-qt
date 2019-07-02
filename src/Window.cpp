@@ -104,6 +104,7 @@ void Window::setCurrentMode(const Config::RunType &t)
         onRadioButtonToggled(true);
         break;
       }
+     default:break;
     }
 }
 
