@@ -8,7 +8,6 @@ Privoxy::Privoxy(QObject *parent) : QProcess(parent)
             "logfile privoxy.log \n"
             "forward-socks5 / 127.0.0.1:__SOCKS_PORT__ .";
     AppManager::checkFile(APP_DATA_DIR+"/privoxy.exe",":/privoxy/privoxy.exe");
-    //setNativeArguments(APP_DATA_DIR+"/privoxy.conf");
     setArguments(QStringList(APP_DATA_DIR+"/privoxy.conf"));
     setProgram(APP_DATA_DIR+"/privoxy.exe");
 }
@@ -36,7 +35,7 @@ unsigned short Privoxy::getAvailablePort()
     return port;
 }
 ///This function will change the port of trojan
-void Privoxy::configure(bool localOnly,unsigned short &trojanPort)
+void Privoxy::configure(const bool localOnly,unsigned short &trojanPort)
 {
     unsigned short port =getAvailablePort();
     _config.replace("__PRIVOXY_BIND_IP__",localOnly?"127.0.0.1":"0.0.0.0");
