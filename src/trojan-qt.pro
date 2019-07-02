@@ -51,6 +51,7 @@ win32{#win64 also included
     LIBS += -L$$(OPENSSL64_PATH)/lib -llibcrypto -llibssl
     LIBS += -lwsock32 -lws2_32
     LIBS += -lCrypt32
+    LIBS += -lwininet -lrasapi32
     DEFINES +=WIN32_LEAN_AND_MEAN
     RC_ICONS = trojan-qt.ico
     BOOST_DIR_FOLDERS=$$system(dir $$(BOOST_PATH)\include /b /ad-s-h /on)
@@ -62,6 +63,7 @@ win32{#win64 also included
 
 SOURCES += \
     Privoxy.cpp \
+    Sysproxy.cpp \
     trojan/src/authenticator.cpp \
     trojan/src/clientsession.cpp \
     trojan/src/config.cpp \
@@ -90,6 +92,7 @@ SOURCES += \
 
 HEADERS += \
     Privoxy.h \
+    Sysproxy.h \
     trojan/src/authenticator.h \
     trojan/src/clientsession.h \
     trojan/src/config.h \
