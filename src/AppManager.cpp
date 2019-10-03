@@ -227,7 +227,7 @@ void AppManager::setSystemProxy(const bool &enabled)
           system("gsettings set org.gnome.system.proxy mode \"manual\"");
         }
 #elif defined(Q_OS_WIN)
-      if(!SysProxy::setSystemProxyWin(AppManager::client_config_obj["local_port"].toString(),"<local>;189.32.16.1"))
+      if(!SysProxy::setSystemProxyWin(AppManager::client_config_obj["local_port"].toString(),"<local>"))//TODO:un-hardcode bypasslist
       {
           if(!SysProxy::offSystemProxyWin())
           {

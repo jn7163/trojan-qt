@@ -15,7 +15,6 @@
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
-#include <QDebug>
 #ifdef Q_OS_WIN
 #include <QSettings>
 #include "Sysproxy.h"
