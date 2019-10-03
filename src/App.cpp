@@ -52,13 +52,13 @@ App::~App()
 void App::startTrojan()
 {
 #ifdef Q_OS_WIN
-  AppManager::clint_real_config_path=APP_DATA_DIR+"/client.real.json"; //先写在这里
+  AppManager::clint_real_config_path=APP_DATA_DIR+"/client.real.json"; //乱成一锅粥一样
 
-  AppManager::loadJson(AppManager::client_config_path,AppManager::clint_real_config_obj);
-  unsigned short local_port=AppManager::clint_real_config_obj.take("local_port").toString().toUShort() ;
+  AppManager::loadJson(AppManager::client_config_path,AppManager::client_real_config_obj);
+  unsigned short local_port=AppManager::client_real_config_obj["local_port"].toString().toUShort();
   privoxy->configure(true,local_port);
-  AppManager::clint_real_config_obj.insert("local_port",local_port);
-  AppManager::writeJson(AppManager::clint_real_config_path,AppManager::clint_real_config_obj);
+  AppManager::client_real_config_obj.insert("local_port",local_port);
+  AppManager::writeJson(AppManager::clint_real_config_path,AppManager::client_real_config_obj);
 
   service->config().load(AppManager::clint_real_config_path.toStdString());
   privoxy->start();
@@ -72,7 +72,9 @@ void App::startTrojan()
 void App::stopTrojan()
 {
   service->stop();
+  #ifdef Q_OS_WIN
   privoxy->kill();
+  #endif
 }
 
 void App::popErrorBox(const QString &what)

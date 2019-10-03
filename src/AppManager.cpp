@@ -2,7 +2,7 @@
 
 #ifdef Q_OS_WIN
   QString AppManager::clint_real_config_path;
-  QJsonObject AppManager::clint_real_config_obj;
+  QJsonObject AppManager::client_real_config_obj;
 #endif // Q_OS_WIN
 QJsonObject AppManager::client_config_obj;
 QJsonObject AppManager::server_config_obj;
@@ -215,6 +215,7 @@ bool AppManager::writeTrojanConfig()
 
 void AppManager::setSystemProxy(const bool &enabled)
 {
+  AppManager::loadJson(AppManager::client_config_path,AppManager::client_config_obj);
   if(enabled)
     {
 #ifdef Q_OS_LINUX
@@ -226,7 +227,13 @@ void AppManager::setSystemProxy(const bool &enabled)
           system("gsettings set org.gnome.system.proxy mode \"manual\"");
         }
 #elif defined(Q_OS_WIN)
-      SysProxy::setSystemProxyWin(AppManager::client_config_obj.take("local_port").toInt(),"<local>");
+      if(!SysProxy::setSystemProxyWin(AppManager::client_config_obj["local_port"].toString(),"<local>;189.32.16.1"))
+      {
+          if(!SysProxy::offSystemProxyWin())
+          {
+              AppManager::popMessageBox(AppManager::ERROR,"无法设置系统代理",nullptr);
+          }
+      }
 #endif
 
     }
