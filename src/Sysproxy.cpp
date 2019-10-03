@@ -32,13 +32,11 @@
  * limitations under the License.
  */
 #include "Sysproxy.h"
-#include <QDebug>
 #ifdef Q_OS_WIN
 
 bool SysProxy::initialize(INTERNET_PER_CONN_OPTION_LIST* options, const unsigned long option_count){
-        qDebug()<<"SysProxy::initialize Begin"<<endl;
         DWORD dwBufferSize = sizeof(INTERNET_PER_CONN_OPTION_LIST);
-        options->dwSize = dwBufferSize;        
+        options->dwSize = dwBufferSize;
         options->dwOptionCount = option_count;
         options->dwOptionError = 0;
         options->pOptions = static_cast<INTERNET_PER_CONN_OPTION *>(calloc(option_count, sizeof(INTERNET_PER_CONN_OPTION)));
@@ -48,52 +46,50 @@ bool SysProxy::initialize(INTERNET_PER_CONN_OPTION_LIST* options, const unsigned
         }
 
         options->pOptions[0].dwOption = INTERNET_PER_CONN_FLAGS;
-        qDebug()<<"SysProxy::initialize End"<<endl;
         return true;
 }
 
 bool SysProxy::offSystemProxyWin(){
     INTERNET_PER_CONN_OPTION_LIST options;
     initialize(&options, 1);
+    options.pOptions[0].dwOption=INTERNET_PER_CONN_FLAGS;
     options.pOptions[0].Value.dwValue = PROXY_TYPE_AUTO_DETECT | PROXY_TYPE_DIRECT;
     bool ret = apply(&options);
     free(options.pOptions);
     return ret;
 }
 
-bool SysProxy::setSystemProxyWin(const int port ,QString bypassList){
-    qDebug()<<"SysProxy::setSystemProxyWin Begin"<<endl;
-    INTERNET_PER_CONN_OPTION_LIST options;
+bool SysProxy::setSystemProxyWin(const QString port , const QString bypassList){//！入口在这！
     if (bypassList.contains(" "))return false;
-    QString server;
-    server="127.0.0.1:";
-    server.append(QString::number(port));
-    server.append("\0");
-    bypassList.append("\0");
 
+    INTERNET_PER_CONN_OPTION_LIST options;
+
+    QString server="127.0.0.1:";
+    server.append(port);
     wchar_t *bypasslistWc=new wchar_t[bypassList.length()];
     wchar_t *serverWc=new wchar_t[server.length()];
-
     server.toWCharArray(serverWc);
     bypassList.toWCharArray(bypasslistWc);
+    serverWc[server.length()]=0;
+    bypasslistWc[bypassList.length()]=0;
+
     if (initialize(&options, 3)==false) return false;
 
+    options.pOptions[0].dwOption=INTERNET_PER_CONN_FLAGS;
     options.pOptions[0].Value.dwValue = PROXY_TYPE_PROXY | PROXY_TYPE_DIRECT;
     options.pOptions[1].dwOption = INTERNET_PER_CONN_PROXY_SERVER;
     options.pOptions[1].Value.pszValue = serverWc;
     options.pOptions[2].dwOption = INTERNET_PER_CONN_PROXY_BYPASS;
     options.pOptions[2].Value.pszValue = bypasslistWc;
 
-    delete[] bypasslistWc;
-    delete[] serverWc;
+    delete []bypasslistWc;
+    delete []serverWc;
     bool ret = apply(&options);
     free(options.pOptions);
-    qDebug()<<"SysProxy::setSystemProxyWin End"<<endl;
     return ret;
 }
 
 bool SysProxy::apply_connect(INTERNET_PER_CONN_OPTION_LIST* options, LPTSTR conn){
-        qDebug()<<"SysProxy::apply_connect Begin"<<endl;
         options->pszConnection = conn;
 
         BOOL result = InternetSetOption(nullptr, INTERNET_OPTION_PER_CONNECTION_OPTION, options, sizeof(INTERNET_PER_CONN_OPTION_LIST));
@@ -102,12 +98,10 @@ bool SysProxy::apply_connect(INTERNET_PER_CONN_OPTION_LIST* options, LPTSTR conn
         if (!result)return false;
         result = InternetSetOption(nullptr, INTERNET_OPTION_REFRESH, nullptr, 0);
         if (!result)return false;
-        qDebug()<<"SysProxy::apply_connect End True"<<endl;
         return true;
 }
 
 bool SysProxy::apply(INTERNET_PER_CONN_OPTION_LIST* options){
-    qDebug()<<"SysProxy::apply Begin"<<endl;
     DWORD dwCb = 0;
     DWORD dwEntries = 0;
     DWORD dwRet;
@@ -131,7 +125,6 @@ bool SysProxy::apply(INTERNET_PER_CONN_OPTION_LIST* options){
       HeapFree(GetProcessHeap(),0,lpRasEntryName);
       return true;
       }
-    qDebug()<<"SysProxy::apply End"<<endl;
     return apply_connect(options, DEFAULT_LAN_CONNECTION);
 }
 

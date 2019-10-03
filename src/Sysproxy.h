@@ -54,7 +54,7 @@ private:
     static bool initialize(INTERNET_PER_CONN_OPTION_LIST* options, const unsigned long option_count);
     static bool apply_connect(INTERNET_PER_CONN_OPTION_LIST* options, LPTSTR conn);
 public:
-    static bool setSystemProxyWin(const int port, const QString bypassList);
+    static bool setSystemProxyWin(const QString port, const QString bypassList);
     static bool offSystemProxyWin();
 
 };
