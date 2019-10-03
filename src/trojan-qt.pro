@@ -47,7 +47,7 @@ unix{
 }
 
 win32{#win64 also included
-    INCLUDEPATH += $$(OPENSSL64_PATH)/include
+    INCLUDEPATH += $$(OPENSSL64_PATH)\include
     LIBS += -L$$(OPENSSL64_PATH)/lib -llibcrypto -llibssl
     LIBS += -lwsock32 -lws2_32
     LIBS += -lCrypt32
