@@ -79,7 +79,7 @@ Window::Window(QWidget *parent)
   connect(hide_action, &QAction::triggered, this, &QWidget::hide);
   connect(show_action, &QAction::triggered, [this](){this->show();this->raise();});
   connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
-  connect(tray_icon, &QSystemTrayIcon::activated, [this](){this->show();this->raise();});
+  connect(tray_icon, &QSystemTrayIcon::activated, [this](QSystemTrayIcon::ActivationReason r){if(r==QSystemTrayIcon::DoubleClick){this->show();this->raise();}});//需要测试OSX下的表现
   connect(body_widget->server_rbutton, &QRadioButton::toggled, this, &Window::onRadioButtonToggled);
   connect(body_widget->start_button, &Button::clicked, this, &Window::onStartButtonClicked);
   connect(body_widget->config_button, &Button::clicked, this, &Window::onConfigButtonClicked);
