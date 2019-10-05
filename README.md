@@ -10,7 +10,7 @@ Todo | Comment
 ------- | -------
 Linux | Done
 Mac | Automatic system proxy setting not supported
-Windows | Automatic system proxy setting not supported
+Windows | Partially bypass list not supported
 
 ## Documentation
 An online documentation can be found [here](https://trojan-gfw.github.io/trojan/).
