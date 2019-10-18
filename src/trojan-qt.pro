@@ -54,11 +54,8 @@ win32{#win64 also included
     LIBS += -lwininet -lrasapi32
     DEFINES +=WIN32_LEAN_AND_MEAN
     RC_ICONS = trojan-qt.ico
-    BOOST_DIR_FOLDERS=$$system(dir $$(BOOST_PATH)\include /b /ad-s-h /on)
-    for(folder,BOOST_DIR_FOLDERS):contains(folder,boost-[1-9]_[6-9][0-9]){
-        folder_folder=$$system(dir $$(BOOST_PATH)\include\\$$folder /b /ad-s-h,boost)
-        contains(folder_folder,boost):INCLUDEPATH +=$$(BOOST_PATH)/include/$$folder
-    }
+    INCLUDEPATH += $$(BOOST_PATH)
+
 }
 
 SOURCES += \
