@@ -23,9 +23,6 @@ App::App(int &argc, char **argv)
   : QApplication(argc, argv)
   , window(new Window())
   , service(new ServiceThread(this))
-#ifdef Q_OS_WIN
-  , privoxy(new Privoxy(this))
-#endif // Q_OS_WIN
 {
   QApplication::setQuitOnLastWindowClosed(false);
 
@@ -40,6 +37,9 @@ App::App(int &argc, char **argv)
   connect(window, &Window::stopTriggered, this, &App::stopTrojan);
 
   window->setCurrentMode(AppManager::current_run_type);
+#ifdef Q_OS_WIN
+  privoxy =new Privoxy(this); //must after APP_DATA_DIR is created
+#endif // Q_OS_WIN
 }
 
 App::~App()
