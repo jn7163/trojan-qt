@@ -1,12 +1,14 @@
 #include "Privoxy.h"
 #ifdef Q_OS_WIN
-
+#include <QDebug>
 Privoxy::Privoxy(QObject *parent) : QProcess(parent)
 {
     _config="listen-address __PRIVOXY_BIND_IP__:__PRIVOXY_BIND_PORT__ \n"
             "toggle 0 \n"
             "logfile privoxy.log \n"
             "forward-socks5 / 127.0.0.1:__SOCKS_PORT__ .";
+    QDir dir(APP_DATA_DIR);
+    qDebug()<<"The existince of APP_DATA_DIR is:"<<dir.exists();
     AppManager::checkFile(APP_DATA_DIR+"/privoxy.exe",":/privoxy/privoxy.exe");
     setArguments(QStringList(APP_DATA_DIR+"/privoxy.conf"));
     setProgram(APP_DATA_DIR+"/privoxy.exe");

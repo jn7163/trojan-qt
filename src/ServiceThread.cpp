@@ -1,6 +1,4 @@
 #include "ServiceThread.h"
-#include <string>
-#include "trojan/src/log.h"
 
 void ServiceThread::cleanUp() {
   delete service;

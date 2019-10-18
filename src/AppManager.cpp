@@ -1,8 +1,8 @@
 #include "AppManager.h"
 
 #ifdef Q_OS_WIN
-  QString AppManager::clint_real_config_path;
-  QJsonObject AppManager::client_real_config_obj;
+QString AppManager::clint_real_config_path;
+QJsonObject AppManager::client_real_config_obj;
 #endif // Q_OS_WIN
 QJsonObject AppManager::client_config_obj;
 QJsonObject AppManager::server_config_obj;

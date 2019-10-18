@@ -4,6 +4,8 @@
 #include <QThread>
 #include "trojan/src/service.h"
 #include "trojan/src/config.h"
+#include "trojan/src/log.h"
+#include <string>
 
 class ServiceThread : public QThread {
   Q_OBJECT

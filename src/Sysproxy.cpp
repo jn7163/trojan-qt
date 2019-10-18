@@ -53,7 +53,7 @@ bool SysProxy::offSystemProxyWin(){
     INTERNET_PER_CONN_OPTION_LIST options;
     initialize(&options, 1);
     options.pOptions[0].dwOption=INTERNET_PER_CONN_FLAGS;
-    options.pOptions[0].Value.dwValue = PROXY_TYPE_AUTO_DETECT | PROXY_TYPE_DIRECT;
+    options.pOptions[0].Value.dwValue = PROXY_TYPE_DIRECT;
     bool ret = apply(&options);
     free(options.pOptions);
     return ret;
